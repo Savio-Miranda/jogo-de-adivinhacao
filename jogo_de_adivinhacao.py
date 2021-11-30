@@ -1,4 +1,4 @@
-import regras
+import regras_da_advinhacao
 
 print(36 * '*')
 print('Bem-vindo(a) ao jogo de adivinhação!')
@@ -6,9 +6,9 @@ print(36 * '*', end='\n\n')
 print('A pontuação máxima para cada dificuldade é:\n'
       '20 em Fácil, 40 em Médio e 60 em Difícil.\n')
 
-DIFICULDADE_DAS_REGRAS = {'1': lambda: regras.jogo((6, 10, 20)),
-                          '2': lambda: regras.jogo((5, 20, 40)),
-                          '3': lambda: regras.jogo((4, 30, 60))}
+DIFICULDADE_DAS_REGRAS = {'1': lambda: regras_da_advinhacao.jogo((6, 10, 20)),
+                          '2': lambda: regras_da_advinhacao.jogo((5, 20, 40)),
+                          '3': lambda: regras_da_advinhacao.jogo((4, 30, 60))}
 
 jogar = True
 while jogar:
