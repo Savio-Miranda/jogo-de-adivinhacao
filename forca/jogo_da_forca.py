@@ -1,10 +1,7 @@
 def substituidor_de_letras(index, letra, palavra):
-    criador_de_lista_a_partir_de_palavras = list(palavra)
-    criador_de_lista_a_partir_de_palavras[index] = letra
-
-    palavra = "".join(criador_de_lista_a_partir_de_palavras)
-
-    return palavra
+    criar_lista = list(palavra)
+    criar_lista[index] = letra
+    return criar_lista
 
 
 def executar():
@@ -13,14 +10,18 @@ def executar():
     print(36 * '*', end='\n\n')
 
     palavra_secreta = input('Peça a um amigo digitar a palavra secreta!\n-> ').upper().strip()
-    chance = 5
+    chances = 5
 
-    lacuna = ''
+    letras_corretas = ''
+    letras_usadas = []
+
     for contador_de_palavra in range(len(palavra_secreta)):
-        lacuna += '_'
-    print('Palavra secreta: ', lacuna)
+        letras_corretas += '_ '
+    print('Palavra secreta:', letras_corretas)
 
-    while (not lacuna == palavra_secreta) and (chance > 0):
+    letras_corretas = letras_corretas.replace(' ', '')
+
+    while chances > 0:
         index_da_letra = 0
 
         chute = input('Digite uma letra: ').upper().strip()
@@ -28,29 +29,43 @@ def executar():
             print('Entrada inválida! Atente-se às regras.')
             continue
 
-        if chute in palavra_secreta:
+        elif chute in letras_usadas:
+            chances -= 1
+            print('Você já digitou essa entrada. Agora você possui {} chance(s).'.format(chances))
+
+        elif chute in palavra_secreta:
             for letra in palavra_secreta:
                 if chute == letra:
-                    lacuna = substituidor_de_letras(index_da_letra, letra, lacuna)
-
-                if lacuna == palavra_secreta:
-                    print('Você venceu!')
-                    break
+                    letras_corretas = substituidor_de_letras(index_da_letra, letra, letras_corretas)
+                    if letra not in letras_usadas:
+                        letras_usadas.append(letra)
 
                 index_da_letra += 1
 
         else:
-            chance -= 1
-            print('Você errou e possui agora {} chance(s).'.format(chance))
-            if chance == 0:
+            chances -= 1
+            print('Você errou e possui agora {} chance(s).'.format(chances))
+            letras_usadas.append(letras_usadas)
+            if chances == 0:
                 print('Você perdeu!')
-        print('Palavra secreta: ', lacuna)
+
+        print('letras usadas:', letras_usadas, '\n')
+
+        palavra_completa = ''.join(letras_corretas)
+
+        palavra_completa_e_lacunada = ' '.join(letras_corretas)
+
+        print('Palavra secreta:', palavra_completa_e_lacunada)
+
+        if palavra_completa == palavra_secreta:
+            print('Você venceu!')
+            break
 
 
 if __name__ == '__main__':
     while True:
         executar()
-        finalizar = input('Finalizar? [S] para finalizar, qualquer tecla para continuar: ')
+        finalizar = input('Finalizar? [S] para finalizar, qualquer tecla para continuar: ').upper()
         if finalizar == 'S':
             break
 
