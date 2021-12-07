@@ -1,25 +1,16 @@
-def substituidor_de_letras(index, letra, palavra):
-    criar_lista = list(palavra)
-    criar_lista[index] = letra
-    return criar_lista
+from forca import regras_da_forca
 
 
 def executar():
-    print(36 * '*')
-    print('Bem-vindo(a) ao jogo da forca!')
-    print(36 * '*', end='\n\n')
+    regras_da_forca.impressor_de_boas_vindas()
 
     palavra_secreta = input('Peça a um amigo digitar a palavra secreta!\n-> ').upper().strip()
+    palavra_secreta = regras_da_forca.tratamento_da_palavra(palavra_secreta)
+
     chances = 5
-
-    letras_corretas = ''
     letras_usadas = []
-
-    for contador_de_palavra in range(len(palavra_secreta)):
-        letras_corretas += '_ '
-    print('Palavra secreta:', letras_corretas)
-
-    letras_corretas = letras_corretas.replace(' ', '')
+    lacunas = regras_da_forca.criar_lacunas(palavra_secreta)
+    print('Palavra secreta:', lacunas)
 
     while chances > 0:
         index_da_letra = 0
@@ -35,9 +26,13 @@ def executar():
 
         elif chute in palavra_secreta:
             for letra in palavra_secreta:
-                if chute == letra:
-                    letras_corretas = substituidor_de_letras(index_da_letra, letra, letras_corretas)
-                    if letra not in letras_usadas:
+                if letra == ' ':
+                    index_da_letra += 1
+                    continue
+                elif letra == chute:
+                    lacunas = regras_da_forca.substituidor_de_letras(index_da_letra, letra, lacunas)
+
+                    if chute not in letras_usadas:
                         letras_usadas.append(letra)
 
                 index_da_letra += 1
@@ -46,18 +41,15 @@ def executar():
             chances -= 1
             print('Você errou e possui agora {} chance(s).'.format(chances))
             letras_usadas.append(letras_usadas)
-            if chances == 0:
-                print('Você perdeu!')
 
-        print('letras usadas:', letras_usadas, '\n')
+        palavra_preenchida = ''.join(lacunas)
+        print('Palavra secreta:', palavra_preenchida)
 
-        palavra_completa = ''.join(letras_corretas)
+        if chances == 0:
+            print('Você perdeu!')
+            break
 
-        palavra_completa_e_lacunada = ' '.join(letras_corretas)
-
-        print('Palavra secreta:', palavra_completa_e_lacunada)
-
-        if palavra_completa == palavra_secreta:
+        if palavra_preenchida == palavra_secreta:
             print('Você venceu!')
             break
 
