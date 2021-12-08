@@ -2,63 +2,57 @@ from forca import regras_da_forca
 
 
 def executar():
-    regras_da_forca.impressor_de_boas_vindas()
+    letras_usadas = []
+    chances = 5
+    index_da_letra = 0
 
-    palavra_secreta = input('Peça a um amigo digitar a palavra secreta!\n-> ').upper().strip()
+    regras_da_forca.impressor_de_boas_vindas(chances)
+
+    palavra_secreta = input('Peça a um amigo digitar a palavra secreta! Mas se quiser voltar ao MENU, '
+                            'pressione ENTER.\n-> ').upper().strip()
     palavra_secreta = regras_da_forca.tratamento_da_palavra(palavra_secreta)
 
-    chances = 5
-    letras_usadas = []
     lacunas = regras_da_forca.criar_lacunas(palavra_secreta)
-    print('Palavra secreta:', lacunas)
+    if lacunas == '':
+        print('Você saiu do jogo!\n')
+    else:
+        print('Palavra secreta:', lacunas)
 
     while chances > 0:
-        index_da_letra = 0
+        if palavra_secreta == '':
+            break
 
         chute = input('Digite uma letra: ').upper().strip()
         if len(chute) > 1:
-            print('Entrada inválida! Atente-se às regras.')
+            print('Entrada inválida! Você adicionou mais de um caractere. Tente de novo.')
             continue
 
-        elif chute in letras_usadas:
-            chances -= 1
-            print('Você já digitou essa entrada. Agora você possui {} chance(s).'.format(chances))
+        possibilidades_da_forca = {
+            '1': regras_da_forca.entrada_repetida(chute, letras_usadas, chances),
+            '2': regras_da_forca.entrada_incorreta(chute, palavra_secreta, chances, letras_usadas),
+            '3': regras_da_forca.entrada_correta(chute, palavra_secreta, index_da_letra, lacunas, letras_usadas)
+        }
 
-        elif chute in palavra_secreta:
-            for letra in palavra_secreta:
-                if letra == ' ':
-                    index_da_letra += 1
-                    continue
-                elif letra == chute:
-                    lacunas = regras_da_forca.substituidor_de_letras(index_da_letra, letra, lacunas)
+        for selecao in possibilidades_da_forca:
+            saida = possibilidades_da_forca[selecao]
 
-                    if chute not in letras_usadas:
-                        letras_usadas.append(letra)
+            if type(saida) == str:
+                chances -= 1
+                if chances == 0:
+                    print('Você perdeu!')
+                    break
+                print(saida)
+                break
 
-                index_da_letra += 1
-
-        else:
-            chances -= 1
-            print('Você errou e possui agora {} chance(s).'.format(chances))
-            letras_usadas.append(letras_usadas)
-
-        palavra_preenchida = ''.join(lacunas)
-        print('Palavra secreta:', palavra_preenchida)
-
-        if chances == 0:
-            print('Você perdeu!')
-            break
-
-        if palavra_preenchida == palavra_secreta:
-            print('Você venceu!')
-            break
+            elif type(saida) == list:
+                lacunas = saida
+                palavra_preenchida = ''.join(lacunas)
+                print('Palavra secreta:', palavra_preenchida)
+                if palavra_preenchida == palavra_secreta:
+                    print('Você venceu!')
+                    chances = 0
+                    break
 
 
 if __name__ == '__main__':
-    while True:
-        executar()
-        finalizar = input('Finalizar? [S] para finalizar, qualquer tecla para continuar: ').upper()
-        if finalizar == 'S':
-            break
-
-    print('fim de jogo')
+    executar()

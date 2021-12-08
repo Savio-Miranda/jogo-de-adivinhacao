@@ -1,11 +1,13 @@
 from adivinhacao import jogo_de_adivinhacao
 from forca import jogo_da_forca
 
-jogos = input('Que jogo você quer jogar?\n'
-              '[1] Adivinhação, [2] Forca\n'
-              '-> ')
+
 menu = True
 while menu:
+    jogos = input('Que jogo você quer jogar?\n'
+                  '[1] Adivinhação, [2] Forca ou qualquer botão para encerrar o menu.\n'
+                  '-> ')
+
     if jogos == '1':
         jogo_de_adivinhacao.executar()
         continue
@@ -15,4 +17,5 @@ while menu:
         continue
 
     else:
+        print('Menu encerrado.')
         break

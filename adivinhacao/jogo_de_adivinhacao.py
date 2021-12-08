@@ -15,16 +15,14 @@ def executar():
     jogar = True
     while jogar:
         dificuldade = input('Escolha a dificuldade pressionando as seguintes teclas:\n'
-                            '[1] Fácil, [2] Médio, [3] Difícil ou entre com qualquer tecla para SAIR\n'
+                            '[1] Fácil, [2] Médio, [3] Difícil ou entre com qualquer tecla para VOLTAR AO MENU\n'
                             '-> ')
 
         if dificuldade not in dificuldade_das_regras:
-            print('Você saiu do jogo!')
+            print('Você saiu do jogo!\n')
             break
 
         dificuldade_das_regras[dificuldade]()
-
-    print('Fim de jogo')
 
 
 if __name__ == '__main__':
