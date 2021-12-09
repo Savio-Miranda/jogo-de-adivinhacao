@@ -39,7 +39,7 @@ def executar():
             if type(saida) == str:
                 chances -= 1
                 if chances == 0:
-                    print('Você perdeu!')
+                    regras_da_forca.imprime_mensagem_perdedor(palavra_secreta)
                     break
                 print(saida)
                 break
@@ -49,7 +49,7 @@ def executar():
                 palavra_preenchida = ''.join(lacunas)
                 print('Palavra secreta:', palavra_preenchida)
                 if palavra_preenchida == palavra_secreta:
-                    print('Você venceu!')
+                    regras_da_forca.imprime_mensagem_vencedor()
                     chances = 0
                     break
 

@@ -5,9 +5,9 @@ def impressor_de_boas_vindas(chances):
     print('       Você tem {} chances!'.format(chances))
 
 
-def tratamento_da_palavra(palavra):
-    palavra = list(palavra)
-    palavra_tratada = ' '.join(palavra)
+def tratamento_da_palavra(palavra_secreta):
+    palavra_secreta = list(palavra_secreta)
+    palavra_tratada = ' '.join(palavra_secreta)
 
     return palavra_tratada
 
@@ -23,8 +23,8 @@ def criar_lacunas(palavra_tratada):
     return lacunas
 
 
-def substituidor_de_letras(index, letra, palavra):
-    criar_lista = list(palavra)
+def substituidor_de_letras(index, letra, palavra_secreta):
+    criar_lista = list(palavra_secreta)
     criar_lista[index] = letra
 
     return criar_lista
@@ -57,3 +57,38 @@ def entrada_correta(chute, palavra_secreta, index, lacunas, letras_usadas):
 
             index += 1
         return lacunas
+
+
+def imprime_mensagem_vencedor():
+    print("Parabéns, você ganhou!")
+    print("       ___________      ")
+    print("      '._==_==_=_.'     ")
+    print("      .-\\:      /-.    ")
+    print("     | (|:.     |) |    ")
+    print("      '-|:.     |-'     ")
+    print("        \\::.    /      ")
+    print("         '::. .'        ")
+    print("           ) (          ")
+    print("         _.' '._        ")
+    print("        '-------'       ")
+
+
+def imprime_mensagem_perdedor(palavra_secreta):
+    print("Puxa, você foi enforcado!")
+    print("A palavra era {}".format(palavra_secreta))
+    print("    _______________         ")
+    print("   /               \       ")
+    print("  /                 \      ")
+    print("//                   \/\  ")
+    print("\|   XXXX     XXXX   | /   ")
+    print(" |   XXXX     XXXX   |/     ")
+    print(" |   XXX       XXX   |      ")
+    print(" |                   |      ")
+    print(" \__      XXX      __/     ")
+    print("   |\     XXX     /|       ")
+    print("   | |           | |        ")
+    print("   | I I I I I I I |        ")
+    print("   |  I I I I I I  |        ")
+    print("   \_             _/       ")
+    print("     \_         _/         ")
+    print("       \_______/           ")
