@@ -17,12 +17,11 @@ def jogo(nivel):  # O nível do jogo é baseado no número de rodadas e no limit
 
         if chute == numero_secreto:
             print('Você conseguiu! O número secreto era {}!'.format(numero_secreto))
-            break
+            return print("Pontuação:", pontuacao_final)
 
         else:
             if rodada == numero_de_rodadas - 1:
                 print('Você perdeu! O número secreto era:', numero_secreto)
-                pontuacao_final = 0
                 break
 
             if chute > numero_secreto:
@@ -33,4 +32,5 @@ def jogo(nivel):  # O nível do jogo é baseado no número de rodadas e no limit
 
             pontuacao_final -= abs(chute - numero_secreto)
 
-    return print("Pontuação:", pontuacao_final)
+    pontuacao_final = 0
+    return print('Pontuação final: {}'.format(pontuacao_final))
